@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Tag, Image as ImageIcon, Type, AlignLeft, Upload, Link as LinkIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { isValidUrl, isRequired, isFutureDate, isDateInRange } from '../utils/validators';
+import API_BASE_URL from '../config/api';
 
 const CreateEvent = () => {
     const navigate = useNavigate();
@@ -183,7 +184,7 @@ const CreateEvent = () => {
                 formDataToSend.append('category', formData.category);
                 formDataToSend.append('image', imageFile);
 
-                response = await fetch('http://127.0.0.1:5000/api/events', {
+                response = await fetch(`${API_BASE_URL}/api/events`, {
                     method: 'POST',
                     headers: {
                         'x-auth-token': token
@@ -192,7 +193,7 @@ const CreateEvent = () => {
                 });
             } else {
                 // Use JSON for URL
-                response = await fetch('http://127.0.0.1:5000/api/events', {
+                response = await fetch(`${API_BASE_URL}/api/events`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -357,8 +358,8 @@ const CreateEvent = () => {
                                         setImagePreview('');
                                     }}
                                     className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${imageInputMethod === 'url'
-                                            ? 'bg-pink-500 text-white'
-                                            : 'bg-white/5 text-gray-300 hover:bg-white/10'
+                                        ? 'bg-pink-500 text-white'
+                                        : 'bg-white/5 text-gray-300 hover:bg-white/10'
                                         }`}
                                 >
                                     <LinkIcon className="w-4 h-4 inline mr-2" />
@@ -371,8 +372,8 @@ const CreateEvent = () => {
                                         setFormData({ ...formData, image: '' });
                                     }}
                                     className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${imageInputMethod === 'file'
-                                            ? 'bg-pink-500 text-white'
-                                            : 'bg-white/5 text-gray-300 hover:bg-white/10'
+                                        ? 'bg-pink-500 text-white'
+                                        : 'bg-white/5 text-gray-300 hover:bg-white/10'
                                         }`}
                                 >
                                     <Upload className="w-4 h-4 inline mr-2" />

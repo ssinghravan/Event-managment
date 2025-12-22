@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Calendar, CheckSquare, Activity, ShieldCheck, Check, X } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const AdminDashboard = () => {
     const { user } = useAuth();
@@ -14,7 +15,7 @@ const AdminDashboard = () => {
         const fetchStats = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://127.0.0.1:5000/api/stats/dashboard', {
+                const response = await fetch(`${API_BASE_URL}/api/stats/dashboard`, {
                     headers: { 'x-auth-token': token }
                 });
                 const data = await response.json();
@@ -29,7 +30,7 @@ const AdminDashboard = () => {
         const fetchPendingAdmins = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://127.0.0.1:5000/api/auth/admin/pending', {
+                const response = await fetch(`${API_BASE_URL}/api/auth/admin/pending`, {
                     headers: { 'x-auth-token': token }
                 });
                 if (response.ok) {
@@ -48,7 +49,7 @@ const AdminDashboard = () => {
     const handleApprove = async (userId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5000/api/auth/admin/approve/${userId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/auth/admin/approve/${userId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -64,7 +65,7 @@ const AdminDashboard = () => {
     const handleReject = async (userId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5000/api/auth/admin/reject/${userId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/auth/admin/reject/${userId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });

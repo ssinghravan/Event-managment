@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Circle, Clock, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const TaskDashboard = () => {
     const { user } = useAuth();
@@ -13,7 +14,7 @@ const TaskDashboard = () => {
             if (!user) return;
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://127.0.0.1:5000/api/tasks/my-tasks', {
+                const response = await fetch(`${API_BASE_URL}/api/tasks/my-tasks`, {
                     headers: { 'x-auth-token': token }
                 });
                 const data = await response.json();
@@ -32,7 +33,7 @@ const TaskDashboard = () => {
         const newStatus = currentStatus === 'Completed' ? 'Pending' : 'Completed';
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5000/api/tasks/${taskId}/status`, {
+            const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/status`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

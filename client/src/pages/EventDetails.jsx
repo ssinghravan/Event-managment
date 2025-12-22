@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Clock, Tag, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const EventDetails = () => {
     const { id } = useParams();
@@ -17,7 +18,7 @@ const EventDetails = () => {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/api/events/${id}`);
+                const response = await fetch(`${API_BASE_URL}/api/events/${id}`);
                 if (!response.ok) throw new Error('Event not found');
                 const data = await response.json();
                 setEvent(data);
@@ -49,7 +50,7 @@ const EventDetails = () => {
         setVolunteering(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5000/api/volunteers/${id}/join`, {
+            const response = await fetch(`${API_BASE_URL}/api/volunteers/${id}/join`, {
                 method: 'POST',
                 headers: {
                     'x-auth-token': token

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MapPin, Calendar, ArrowRight } from 'lucide-react';
+import API_BASE_URL from '../config/api';
 
 const EventCarousel = () => {
     const [events, setEvents] = useState([]);
@@ -10,7 +11,7 @@ const EventCarousel = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/events');
+                const response = await fetch(`${API_BASE_URL}/api/events`);
                 const data = await response.json();
                 // Limit to first 3 events for home page
                 setEvents(data.slice(0, 3));

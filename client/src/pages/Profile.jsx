@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Calendar, Shield, Phone, Camera, Save, X, Upload } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const Profile = () => {
     const { user, login } = useAuth();
@@ -63,7 +64,7 @@ const Profile = () => {
                 formData.append('image', image);
             }
 
-            const response = await fetch('http://127.0.0.1:5000/api/auth/profile', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/profile`, {
                 method: 'PUT',
                 headers: {
                     'x-auth-token': token

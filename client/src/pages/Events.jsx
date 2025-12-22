@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, ArrowRight, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const Events = () => {
     const { user } = useAuth();
@@ -17,7 +18,7 @@ const Events = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/events');
+                const response = await fetch(`${API_BASE_URL}/api/events`);
                 const data = await response.json();
                 setEvents(data);
             } catch (error) {

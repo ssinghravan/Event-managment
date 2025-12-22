@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Heart, User, Mail, Lock, ArrowRight, ShieldCheck, Phone } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { isValidEmail, isValidPhone, isRequired, checkPasswordStrength } from '../utils/validators';
+import API_BASE_URL from '../config/api';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -161,7 +162,7 @@ const Register = () => {
 
             setLoading(true);
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/auth/register', {
+                const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -189,7 +190,7 @@ const Register = () => {
             // Verify OTP
             setLoading(true);
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/auth/verify-otp', {
+                const response = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

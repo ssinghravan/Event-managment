@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, ArrowRight, Users, Mail, Phone, CheckCircle, XCircle, Search, Filter, Shield, UserCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 const Volunteers = () => {
     const { user } = useAuth();
@@ -26,7 +27,7 @@ const Volunteers = () => {
 
                 if (isAdmin) {
                     // Fetch all volunteers for admin
-                    const response = await fetch('http://127.0.0.1:5000/api/volunteers/all', {
+                    const response = await fetch(`${API_BASE_URL}/api/volunteers/all`, {
                         headers: {
                             'x-auth-token': token
                         }
@@ -35,7 +36,7 @@ const Volunteers = () => {
                     setVolunteers(data);
                 } else {
                     // Fetch user's events for regular users
-                    const response = await fetch('http://127.0.0.1:5000/api/volunteers/my-events', {
+                    const response = await fetch(`${API_BASE_URL}/api/volunteers/my-events`, {
                         headers: {
                             'x-auth-token': token
                         }
