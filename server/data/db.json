@@ -1,0 +1,89 @@
+{
+  "users": [
+    {
+      "name": "Test User",
+      "email": "test1765302340758@example.com",
+      "password": "$2b$10$hKdoRUSgJIQIim.Ja/7xpO4xP31LMJxUTarM0lir/na9brMGPRfu2",
+      "phone": "1234567890",
+      "otp": "443013",
+      "otpExpires": "2025-12-09T17:55:40.857Z",
+      "isVerified": false,
+      "role": "volunteer",
+      "image": "http://127.0.0.1:5000/uploads/default.jpg",
+      "_id": "1765302340858"
+    },
+    {
+      "name": "Admin User",
+      "email": "admin@impactflow.com",
+      "password": "$2b$10$hKdoRUSgJIQIim.Ja/7xpO4xP31LMJxUTarM0lir/na9brMGPRfu2",
+      "role": "admin",
+      "isVerified": true,
+      "image": "http://127.0.0.1:5000/uploads/default.jpg",
+      "_id": "admin_1"
+    },
+    {
+      "name": "Test Admin",
+      "email": "admin_1765304727355@test.com",
+      "password": "$2b$10$yjdKcWun5h3EW1aBOniEUuSJkeo5N6KUErU6/YzdinRNJSpCmSWAS",
+      "phone": "1234567890",
+      "otp": "953220",
+      "otpExpires": "2025-12-09T18:35:27.461Z",
+      "isVerified": false,
+      "role": "admin",
+      "_id": "1765304727462"
+    },
+    {
+      "name": "Sahil ",
+      "email": "ssinghr100@gmai.com",
+      "password": "$2b$10$5dQBYvrJSRknS6j.XdPevu8gShwTccM/ItJvv5omKBI/V2o/Om76y",
+      "phone": "8294881973",
+      "otp": "843183",
+      "otpExpires": "2025-12-09T18:35:53.740Z",
+      "isVerified": false,
+      "role": "admin",
+      "_id": "1765304753740"
+    },
+    {
+      "name": "sahil",
+      "email": "sahilsingh12072003@gmail.com",
+      "password": "$2b$10$EEtNJ88gTpAIMAzJv9LfFerSv4yldT2K7AyZS5tw896r80s28EDay",
+      "phone": "8294881973",
+      "isVerified": true,
+      "role": "volunteer",
+      "_id": "1765306258145"
+    }
+  ],
+  "events": [
+    {
+      "title": "City Park Cleanup Drive",
+      "description": "Join us for a day of cleaning and greening our beloved city park. Gloves and bags provided.",
+      "date": "2023-10-15T09:00:00.000Z",
+      "location": "Central Park, NY",
+      "category": "Environment",
+      "image": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=800",
+      "_id": "1",
+      "organizer": "admin"
+    },
+    {
+      "title": "Food Drive for Homeless",
+      "description": "Help us collect and distribute food to those in need in our community.",
+      "date": "2023-10-22T10:00:00.000Z",
+      "location": "Community Center",
+      "category": "Community",
+      "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800",
+      "_id": "2",
+      "organizer": "admin"
+    },
+    {
+      "title": "Youth Mentorship Workshop",
+      "description": "Share your skills and experience with the next generation of leaders.",
+      "date": "2023-11-05T14:00:00.000Z",
+      "location": "Public Library",
+      "category": "Education",
+      "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800",
+      "_id": "3",
+      "organizer": "admin"
+    }
+  ],
+  "volunteers": []
+}

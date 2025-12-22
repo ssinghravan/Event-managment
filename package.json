@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.554.0",
+    "react-router-dom": "^7.9.6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "prestart": "node cleanup-port.js",
+    "start": "node index.js",
+    "predev": "node cleanup-port.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "form-data": "^4.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.3",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.11"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

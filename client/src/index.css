@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@keyframes rgb-text {
+    0% {
+        color: #3b82f6;
+    }
+
+    /* Blue */
+    33% {
+        color: #a855f7;
+    }
+
+    /* Purple */
+    66% {
+        color: #ec4899;
+    }
+
+    /* Pink */
+    100% {
+        color: #3b82f6;
+    }
+
+    /* Blue */
+}
+
+.animate-rgb-text {
+    animation: rgb-text 4s infinite linear;
+}
+
+@keyframes gradient-xy {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.animate-gradient {
+    /* Fallback for variables */
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+
+    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), #2563eb, #9333ea, #dc2626);
+    background-size: 200% 200%;
+    animation: gradient-xy 15s ease infinite;
+    transition: background-position 0.2s ease-out;
+}
