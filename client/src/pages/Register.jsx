@@ -5,6 +5,7 @@ import { Heart, User, Mail, Lock, ArrowRight, ShieldCheck, Phone } from 'lucide-
 import { useAuth } from '../context/AuthContext';
 import { isValidEmail, isValidPhone, isRequired, checkPasswordStrength } from '../utils/validators';
 import API_BASE_URL from '../config/api';
+import fetchWithRetry from '../utils/fetchWithRetry';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -163,7 +164,7 @@ const Register = () => {
 
         setLoading(true);
         try {
-            const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+            const response = await fetchWithRetry(`${API_BASE_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

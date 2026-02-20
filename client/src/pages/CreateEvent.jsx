@@ -5,6 +5,7 @@ import { Calendar, MapPin, Tag, Image as ImageIcon, Type, AlignLeft, Upload, Lin
 import { useAuth } from '../context/AuthContext';
 import { isValidUrl, isRequired, isFutureDate, isDateInRange } from '../utils/validators';
 import API_BASE_URL from '../config/api';
+import fetchWithRetry from '../utils/fetchWithRetry';
 
 const CreateEvent = () => {
     const navigate = useNavigate();
@@ -184,7 +185,7 @@ const CreateEvent = () => {
                 formDataToSend.append('category', formData.category);
                 formDataToSend.append('image', imageFile);
 
-                response = await fetch(`${API_BASE_URL}/api/events`, {
+                response = await fetchWithRetry(`${API_BASE_URL}/api/events`, {
                     method: 'POST',
                     headers: {
                         'x-auth-token': token
@@ -193,7 +194,7 @@ const CreateEvent = () => {
                 });
             } else {
                 // Use JSON for URL
-                response = await fetch(`${API_BASE_URL}/api/events`, {
+                response = await fetchWithRetry(`${API_BASE_URL}/api/events`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

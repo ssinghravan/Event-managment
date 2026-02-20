@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MapPin, Calendar, ArrowRight } from 'lucide-react';
 import API_BASE_URL from '../config/api';
+import fetchWithRetry from '../utils/fetchWithRetry';
 
 const EventCarousel = () => {
     const [events, setEvents] = useState([]);
@@ -11,7 +12,7 @@ const EventCarousel = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/events`);
+                const response = await fetchWithRetry(`${API_BASE_URL}/api/events`);
                 const data = await response.json();
                 // Limit to first 3 events for home page
                 setEvents(data.slice(0, 3));
