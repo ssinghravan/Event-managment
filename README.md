@@ -55,3 +55,8 @@ If the quick start doesn't work, you can set them up individually:
 
 *   **client/**: React frontend application
 *   **server/**: Node.js/Express backend API
+
+
+sahilsingh123
+
+ssinghr100_db_user

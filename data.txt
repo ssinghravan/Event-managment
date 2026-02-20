@@ -1,0 +1,6 @@
+This is a sample text file for compression testing.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Node.js zlib module provides excellent compression capabilities.
+This file will be compressed into data.gz using gzip compression.
+The compression ratio depends on the content and its redundancy.
+Repeated text compresses better: test test test test test test.

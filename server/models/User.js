@@ -7,8 +7,7 @@ const userSchema = new mongoose.Schema({
     phone: { type: String },
     image: { type: String },
     role: { type: String, enum: ['admin', 'volunteer', 'coordinator'], default: 'volunteer' },
-    otp: { type: String },
-    otpExpires: { type: Date },
+
     isVerified: { type: Boolean, default: false },
     isAdminApproved: { type: Boolean, default: false },
     adminApprovedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

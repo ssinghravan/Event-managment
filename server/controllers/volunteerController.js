@@ -98,15 +98,15 @@ export const getAllVolunteers = async (req, res) => {
         let volunteers;
 
         if (isMongoConnected()) {
-            // Fetch all users, excluding password and OTP
+            // Fetch all users, excluding password
             volunteers = await User.find()
-                .select('-password -otp -otpExpires')
+                .select('-password')
                 .sort({ createdAt: -1 });
         } else {
             // For mock DB, fetch all users
             const allUsers = await mockDb.users.find();
             volunteers = allUsers
-                .map(({ password, otp, otpExpires, ...user }) => user); // Exclude sensitive data
+                .map(({ password, ...user }) => user); // Exclude sensitive data
         }
 
         res.json(volunteers);

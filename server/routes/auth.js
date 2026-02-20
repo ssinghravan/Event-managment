@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import User from '../models/User.js';
 import { mockDb } from '../utils/mockDb.js';
-import { sendOTP } from '../utils/emailService.js';
+
 
 const router = express.Router();
 
@@ -28,19 +28,6 @@ router.post('/register', async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-
-        // ... (inside register route)
-        console.log(`OTP for ${email}: ${otp}`); // Keep log for backup
-
-        // Send OTP via Email
-        const emailSent = await sendOTP(email, otp);
-        if (!emailSent) {
-            console.log('Failed to send email. Check credentials.');
-            // Only fails silently for now to allow local testing if email fails
-        }
-
         // Check if this is the first admin (auto-approve first admin)
         let isAdminApproved = true; // Default for volunteers/coordinators
         if (role === 'admin') {
@@ -60,9 +47,7 @@ router.post('/register', async (req, res) => {
             email,
             password: hashedPassword,
             phone,
-            otp,
-            otpExpires,
-            isVerified: false,
+            isVerified: true,
             role: role || 'volunteer',
             isAdminApproved
         };
@@ -74,69 +59,25 @@ router.post('/register', async (req, res) => {
             user = await mockDb.users.create(userData);
         }
 
-        res.status(201).json({ message: 'Registration successful. Please verify OTP sent to your email/phone.' });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-});
-
-// Verify OTP
-router.post('/verify-otp', async (req, res) => {
-    try {
-        const { email, otp } = req.body;
-        let user;
-
-        if (isMongoConnected()) {
-            user = await User.findOne({ email });
-        } else {
-            user = await mockDb.users.findOne({ email });
-        }
-
-        if (!user) return res.status(400).json({ message: 'Invalid email or OTP' });
-
-        console.log(`Verify OTP: Input=${otp}, Stored=${user.otp}`);
-
-        // Use loose equality and trim to handle potential type/whitespace issues
-        const isOtpMatch = String(user.otp).trim() === String(otp).trim();
-        const isNotExpired = new Date() <= new Date(user.otpExpires);
-
-        if (!isOtpMatch || !isNotExpired) {
-            console.log(`OTP Fail: Match=${isOtpMatch}, NotExpired=${isNotExpired}`);
-            return res.status(400).json({ message: 'Invalid or expired OTP' });
-        }
-
-        // Verify user
-        if (isMongoConnected()) {
-            user.isVerified = true;
-            user.otp = undefined;
-            user.otpExpires = undefined;
-            await user.save();
-        } else {
-            await mockDb.users.update(user._id || user.id, {
-                isVerified: true,
-                otp: undefined,
-                otpExpires: undefined
-            });
-        }
-
-        // Check if admin is approved before issuing token
-        if (user.role === 'admin' && !user.isAdminApproved) {
-            return res.status(200).json({
-                message: 'Email verified successfully! Your admin request is pending approval. Please wait for an existing admin to approve your request before you can sign in.',
+        // If admin requires approval, don't issue token yet
+        if (user.role === 'admin' && !isAdminApproved) {
+            return res.status(201).json({
+                message: 'Registration successful! Your admin request is pending approval. Please wait for an existing admin to approve your request before you can sign in.',
                 requiresApproval: true
             });
         }
 
+        // Issue token and log user in directly
         const token = jwt.sign({ id: user._id || user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        res.status(200).json({ token, user: { id: user._id || user.id, name: user.name, email: user.email, role: user.role, phone: user.phone, image: user.image } });
+        res.status(201).json({ token, user: { id: user._id || user.id, name: user.name, email: user.email, role: user.role, phone: user.phone, image: user.image } });
 
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
+
+
 
 // Login
 router.post('/login', async (req, res) => {
@@ -156,9 +97,7 @@ router.post('/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-        if (user.isVerified === false) {
-            return res.status(400).json({ message: 'Please verify your email first' });
-        }
+
 
         // Check if admin is approved
         if (user.role === 'admin' && !user.isAdminApproved) {
